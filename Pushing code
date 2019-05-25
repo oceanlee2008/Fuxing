@@ -1,0 +1,119 @@
+ elif empty_pos is None:
+                new_r, new_c = (randint(3)-1, randint(3)-1 )
+                if new_r == 0 and new_c == 0:
+                    return new_r, new_c
+                # center position
+                cp_r, cp_c = self.cp
+                newcell_pos = (cp_r + new_r, cp_c + new_c)
+
+                # push_direction, 0-8 describe the 3*3 matrix，cp_pos = 4 point
+
+                if new_r == -1 and new_c == -1:  # 0 point
+                    push_matrix = np.diag(cancer_matrix[:cp_r, :cp_c])
+                    push_matrix = np.delete(push_matrix, [0])
+                    push_matrix = np.append(push_matrix, 0)
+                    if cp_r >= cp_c:
+                        for i in range(cp_c):
+                            cancer_matrix[cp_r - i, cp_c - i] = push_matrix[cp_c - 1 - i]
+                    else:
+                        for i in range(cp_r):
+                            cancer_matrix[cp_r - i, cp_c - i] = push_matrix[cp_r - 1 - i]
+
+                elif new_r == -1 and new_c == 0:  # 1 point
+                    push_matrix = cancer_matrix[:cp_r, cp_c:(cp_c+1)]
+                    print('push5', push_matrix, '\n',len(push_matrix) )
+                    push_matrix = np.delete(push_matrix, [0])
+                    print('push6', push_matrix, '\n',len(push_matrix)  )
+                    push_matrix = np.append(push_matrix,0)
+                    print('push7', push_matrix, '\n',len(push_matrix)  )
+                    for i in range(cp_r):
+                        cancer_matrix[i, cp_c] = push_matrix[i]
+
+                elif new_r == -1 and new_c == 1:  # 2 point
+                    push_matrix = []
+                    if cp_r  >=  (Max_COL - cp_c):
+                        for i in range((Max_COL - cp_c)):
+                            push_matrix = np.append(push_matrix, cancer_matrix[cp_r - i, cp_c + i])
+                            push_matrix = np.delete(push_matrix, [Max_COL - cp_c -1])
+                            push_matrix = np.insert(push_matrix, 0,[0])
+                        for i in range((Max_COL - cp_c)):
+                            cancer_matrix[cp_r - i, cp_c + i] = push_matrix[cp_c - i]
+                    elif cp_r  <  (Max_COL - cp_c):
+                        for i in range(cp_r):
+                            push_matrix = np.append(push_matrix, cancer_matrix[cp_r - i, cp_c + i])
+
+                            push_matrix = np.delete(push_matrix, [cp_c - 1])
+
+                            push_matrix = np.insert(push_matrix, 0, [0])
+                        print('push',push_matrix,'\n')
+                        for i in range(cp_r):
+                            cancer_matrix[cp_r - i, cp_c ] = push_matrix[cp_r - i]
+
+
+                elif new_r == 0 and new_c == -1:  # 3 point
+                    push_matrix = cancer_matrix[cp_r:(cp_r+1), :cp_c]
+                    push_matrix = np.delete(push_matrix, [0])
+                    push_matrix = np.append(push_matrix, 0)
+                    for i in range(cp_c):
+                        cancer_matrix[cp_r, cp_c - i] = push_matrix[cp_c - i -1]
+
+
+                elif new_r == 0 and new_c == 1:  # 5 point
+
+                    push_matrix = cancer_matrix[cp_r:(cp_r + 1), cp_c:]
+
+                    push_matrix = np.delete(push_matrix, [0])
+
+                    push_matrix = np.append(push_matrix, 0)
+
+                    for i in range(Max_COL - cp_c):
+                        cancer_matrix[cp_r, cp_c + i ] = push_matrix[i]
+
+                elif new_r == 1 and new_c == -1:    # 6 point
+
+                    push_matrix = []
+
+                    if (Max_ROW - cp_r) >= cp_c:
+
+                        for i in range((cp_c)):
+                            push_matrix = np.append(push_matrix, cancer_matrix[cp_r + i, cp_c - i])
+
+                            push_matrix = np.delete(push_matrix, [0])
+
+                            push_matrix = np.append(push_matrix, 0)
+
+                            cancer_matrix[cp_r + i, cp_c - i] = push_matrix[i]
+
+                    else:
+
+                        for i in range(Max_ROW - cp_r):
+                            push_matrix = np.append(push_matrix, cancer_matrix[cp_r + i, cp_c - i])
+
+                            push_matrix = np.delete(push_matrix, [0])
+
+                            push_matrix = np.append(push_matrix, 0)
+
+                            cancer_matrix[cp_r + i, cp_c - i] = push_matrix[i]
+
+
+                elif new_r == 1 and new_c == 0:  # 7 point
+                    push_matrix = cancer_matrix[cp_r:, cp_c:(cp_c + 1)]
+
+                    push_matrix = np.delete(push_matrix, [0])
+
+                    push_matrix = np.append(push_matrix, 0)
+
+                    for i in range(Max_ROW - cp_r):
+                        cancer_matrix[cp_r+i, cp_c] = push_matrix[i]
+
+
+                elif new_r == 1 and new_c == 1:  # 8 point
+                    push_matrix = np.diag(cancer_matrix[cp_r:, cp_c:])
+                    push_matrix = np.delete(push_matrix, [0])
+                    push_matrix = np.append(push_matrix, 0)
+                    if (Max_ROW - cp_r) >= (Max_COL - cp_c):
+                        for i in range(Max_COL - cp_c):
+                            cancer_matrix[cp_r + i, cp_c + i] = push_matrix[i]
+                    else:
+                        for i in range(Max_ROW - cp_r):
+                            cancer_matrix[cp_r + i, cp_c + i] = push_matrix[i]
