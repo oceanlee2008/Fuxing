@@ -1,7 +1,8 @@
+ # recursion may be a good idea
  elif empty_pos is None:
                 new_r, new_c = (randint(3)-1, randint(3)-1 )
                 if new_r == 0 and new_c == 0:
-                    return new_r, new_c
+                    return new_r, new_c #why return the center position??
                 # center position
                 cp_r, cp_c = self.cp
                 newcell_pos = (cp_r + new_r, cp_c + new_c)
@@ -9,7 +10,7 @@
                 # push_direction, 0-8 describe the 3*3 matrix，cp_pos = 4 point
 
                 if new_r == -1 and new_c == -1:  # 0 point
-                    push_matrix = np.diag(cancer_matrix[:cp_r, :cp_c])
+                    push_matrix = np.diag(cancer_matrix[:cp_r, :cp_c]) #need to check this 'diag' function: how does it work actually?   
                     push_matrix = np.delete(push_matrix, [0])
                     push_matrix = np.append(push_matrix, 0)
                     if cp_r >= cp_c:
