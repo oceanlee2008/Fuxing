@@ -1,0 +1,31 @@
+def push(agent_dictionary, new_cell, origin,direction):
+    cp_r, cp_c = origin
+    dr, dc = direction
+    container = new_cell
+
+    while agent_dictionary[cp_r + dr,cp_c + dc] is not None:
+        container, agent_dictionary[cp_r + dr, cp_c + dc] = agent_dictionary[cp_r + dr, cp_c + dc], container
+        cp_r = cp_r + dr
+        cp_c = cp_c + dc
+        if cp_r <= 0 or cp_r >= numpy.size(agent_dictionary,1)-1 or cp_c <= 0 or cp_c >= numpy.size(agent_dictionary,0)-1:break
+
+if __name__ == '__main__':
+    import numpy
+    agent_dictionary = numpy.array([[0,0,0,0,0,0,0,0,0,0,0],
+                                   [0,0,0,0,0,0,0,0,0,0,0],
+                                   [0,0,1,1,0,1,0,1,0,0,0],
+                                   [0,0,1,1,1,1,1,1,1,0,0],
+                                   [0,0,0,1,1,1,1,0,0,1,0],
+                                   [0,0,0,0,1,1,1,0,1,0,0],
+                                   [0,0,0,0,1,1,1,1,0,0,0],
+                                   [0,0,0,0,0,0,0,0,0,0,0],
+                                   [0,0,0,0,0,0,0,0,0,0,0],
+                                   [0,0,0,0,0,0,0,0,0,0,0]])
+    print(agent_dictionary)
+    origin =[5,5]
+    direction = [1,1]
+    new_cell = 2
+    push(agent_dictionary, new_cell, origin, direction)
+    print(agent_dictionary)
+
+
